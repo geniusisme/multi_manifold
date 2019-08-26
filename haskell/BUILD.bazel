@@ -1,0 +1,14 @@
+load(
+    "@rules_haskell//haskell:defs.bzl",
+    "haskell_binary",
+    "haskell_toolchain_library",
+)
+
+haskell_toolchain_library(name = "base")
+
+haskell_binary(
+    name = "manifold",
+    srcs = ["Main.hs"],
+    compiler_flags = ["-threaded", "-O2"],
+    deps = [":base"],
+)
