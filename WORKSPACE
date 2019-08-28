@@ -22,15 +22,24 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_rust/tarball/master"],
 )
 
-#http_archive(
- #   name = "bazel_skylib",
- #   sha256 = "eb5c57e4c12e68c0c20bc774bfbc60a568e800d025557bc4ea022c6479acc867",
-  #  strip_prefix = "bazel-skylib-0.6.0",
-   # url = "https://github.com/bazelbuild/bazel-skylib/archive/0.6.0.tar.gz",
-#)
-
 load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
 rust_repositories()
 
 load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
 bazel_version(name = "bazel_version")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+rules_kotlin_version = "9051eb053f9c958440603d557316a6e9fda14687"
+#"67f4a6050584730ebae7f8a40435a209f8e0b48e"
+
+http_archive(
+    name = "io_bazel_rules_kotlin",
+    urls = ["https://github.com/bazelbuild/rules_kotlin/archive/%s.zip" % rules_kotlin_version],
+    type = "zip",
+    strip_prefix = "rules_kotlin-%s" % rules_kotlin_version
+)
+
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kotlin_repositories", "kt_register_toolchains")
+kotlin_repositories()
+kt_register_toolchains()
