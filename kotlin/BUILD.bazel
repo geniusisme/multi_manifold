@@ -1,0 +1,21 @@
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_binary")
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
+load("//kotlin:kotlin_native.bzl", "kt_native_binary")
+load("//kotlin:kotlin_native.bzl", "kt_native_compiler")
+
+kt_jvm_binary(
+    name = "manifold-jvm",
+    srcs = glob(["jvm/*.kt"]) + glob(["core/*.kt"]),
+    main_class = "MainKt"
+)
+
+kt_native_binary(
+    name = "manifold-native",
+    srcs = glob(["native/*.kt"]) + glob(["core/*.kt"]),
+    toolchain = "kotlinc"
+)
+
+kt_native_compiler(
+    name = "kotlinc",
+    kotlinc_native_path = ""
+)

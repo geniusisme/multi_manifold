@@ -1,4 +1,4 @@
-package geniusisme.manifold
+package geniusisme.manifold.core
 
 fun simulate(): Pair<Int, Int> {
     var steps = 0
@@ -7,10 +7,6 @@ fun simulate(): Pair<Int, Int> {
         steps++
     }
     return Pair(steps, steps / steps_per_second)
-}
-
-fun getstr(): String {
-    return "Trololo"
 }
 
 val machines_num = 1000

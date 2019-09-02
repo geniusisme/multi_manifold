@@ -1,7 +1,6 @@
-package geniusisme.manifold.jvm
 import geniusisme.manifold.core.*
 
-fun main(args: Array<String>) {
+fun main() {
     val (steps, secs) = simulate()
     println("secs: $secs, steps: $steps")
 }
