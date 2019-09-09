@@ -30,5 +30,5 @@ kt_native_binary(
 
 kt_native_compiler(
     name = "kotlinc",
-    kotlinc_native_path = "/mnt/e/tools/kotlin-native/dist/bin/kotlinc-native"
+    kotlinc_native_path = "add kotlinc-native path here"
 )
