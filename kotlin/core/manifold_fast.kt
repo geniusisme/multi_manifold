@@ -21,18 +21,13 @@ private enum class Dir {
     Away
 }
 
-private val feed = Dir.Feed // using constants instead enumeraion names gives like 6% performace!
-private val away = Dir.Away
+val feed = 32
+val away = 55
 
-
-private data class Machine(
-    var buffer: Int,
-    var hunger: Int
-)
-
-private val directions = MutableList(machines_num, { away } )
-private val machines = MutableList<Machine>(machines_num) { Machine(0, eat_interval) }
-private val belts = IntArray(machines_num, { 0 } )
+val directions = IntArray(machines_num, { away })
+val buffers = IntArray(machines_num, { 0 } )
+val hungers = IntArray(machines_num, { eat_interval } )
+val belts = IntArray(machines_num, { 0 } )
 
 fun step() {
     var next_belt = food_per_step
@@ -63,18 +58,16 @@ fun step() {
 }
 
 fun all_fed(): Boolean {
-    return machines[machines_num - 1].hunger < eat_interval
-        && machines[machines_num - 2].hunger < eat_interval
-        && machines
-            .asSequence()
+    return hungers[machines_num - 1] < eat_interval
+        && hungers[machines_num - 2] < eat_interval
+        && buffers
             .take(machines_num - 2)
-            .map { it.buffer }
             .fold(true) { fed, buffer -> fed && buffer + eat_at_once >= max_space }
 }
 
 fun feed_machine(idx: Int, food: Int): Int {
-    var buffer = machines[idx].buffer
-    var hunger = machines[idx].hunger
+    var buffer = buffers[idx]
+    var hunger = hungers[idx]
     buffer = buffer + food
     hunger = hunger + 1
     val will_eat = hunger >= eat_interval && buffer >= eat_at_once
@@ -82,7 +75,7 @@ fun feed_machine(idx: Int, food: Int): Int {
     hunger = if (will_eat) 0 else hunger
     val overflow = (buffer - max_space).coerceAtLeast(0)
     buffer = buffer.coerceAtMost(max_space)
-    machines[idx].buffer = buffer
-    machines[idx].hunger = hunger
+    buffers[idx] = buffer
+    hungers[idx] = hunger
     return overflow
 }

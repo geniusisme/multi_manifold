@@ -2,7 +2,7 @@ def kt_native_binary(name, srcs, toolchain, **kwargs):
     native.genrule(
         name = name,
         srcs = srcs,
-        cmd = "$(KOTLINC) $(SRCS) -o $@",
+        cmd = "$(KOTLINC) $(SRCS) -opt -o $@",
         executable = True,
         output_to_bindir = True,
         outs = [name + ".kexe"],
